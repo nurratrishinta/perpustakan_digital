@@ -1,0 +1,32 @@
+<?php
+include '../../app.php';
+include './show.php';
+
+$storages = "../../../storages/contact";
+
+// Hpus gambar lama jika ada
+if (!empty($contact->img) && file_exists($storages . $contact->img)) {
+    unlink($storages . $contact->img);
+}
+
+// hapus data
+$qDelete = "DELETE FROM contacts WHERE id = '$contact->id'";
+$result = mysqli_query($connect, $qDelete) or die(mysqli_error($connect));
+
+//  cek apakah data berhasil di hapus atau tidak
+if ($result) {
+    echo "
+                <script>
+                    alert('Data Berhasil Dihapus');
+                    window.location.href='../../pages/contact/index.php';
+                </script>
+            ";
+} else {
+    echo "
+                <script>
+                    alert('Data Gagal Dihapus');
+                    window.location.href='../../pages/contact/index.php';
+                </script>
+            ";
+}
+?>
